@@ -12,7 +12,9 @@
 <script>
 export default {
     props: {
-        list: Array
+        list: {
+            type: Array
+        }
     },
     data() {
         return {
