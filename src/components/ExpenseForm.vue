@@ -5,7 +5,7 @@
       <select v-model="category">
         <option v-for="option in getCategories" :key="option" :value="option">{{option}}</option>
       </select>
-      <input type="text" v-model="newCategory" /><button @click="addCategory(newCategory)">Add category</button>
+      <CategoryForm />
       <br>
       <input type="number" v-model.number="value" placeholder="amount">
       <br>
@@ -15,38 +15,28 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
+import CategoryForm from './CategoryForm.vue'
 
 export default {
+    components: { CategoryForm },
     name: 'ExpensesForm',
     data() {
         return {
             date: null,
             category: null,
-            value: null,
-            newCategory: ''
+            value: null
         }
     },
     computed: {
         ...mapGetters(
             [
-                'getExpenses', 
-                'getExpensesSum',
                 'getCategories'
             ]
         )
     },
     methods: {
-        addCategory(newCategory) {
-            // console.log(1)
-            // console.log(this.newCategory)
-            this.addCategory(newCategory)
-            this.newCategory = ''
-        },
         ...mapMutations([
-            'setExpensesData',
-            'addExpense',
-            'setCategories',
-            'addCategory'
+            'addExpense'
         ]),
         save() {
             this.addExpense({date: this.date, category: this.category, value: this.value});
