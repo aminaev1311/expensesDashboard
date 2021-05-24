@@ -2,20 +2,17 @@
     <div>
         <div> press to show a page: </div>
         <button @click="$emit('pagination-click', page-1>0 ? page=page-1 : page)"> &lt; </button>
-        <span v-for="n in Math.ceil(list.length/5)" :key="n">&nbsp;
+        <span v-for="n in Math.ceil(getExpenses.length/5)" :key="n">&nbsp;
             <button @click="$emit('pagination-click',n)">{{page=n}}</button>&nbsp;
         </span>
-        <button @click="$emit('pagination-click', page + 1 <= Math.ceil(list.length/5)? page=page+1 : page)"> &gt;  </button>
+        <button @click="$emit('pagination-click', page + 1 <= Math.ceil(getExpenses.length/5)? page=page+1 : page)"> &gt;  </button>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    props: {
-        list: {
-            type: Array
-        }
-    },
     data() {
         return {
             page: 1
@@ -26,6 +23,9 @@ export default {
             this.page = n
             return this.$emit('pagination-click',n)
         }
+    },
+    computed: {
+        ...mapGetters(['getExpenses'])
     }
 }
 </script>

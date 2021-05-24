@@ -14,20 +14,19 @@
           <td> {{ expense.value }} </td>
       </tr>
     </table>
-    <Pagination :list="list" @pagination-click="paginationHandler"/>
-    <div> page {{page}} out of {{Math.ceil(list.length/5)}} </div>
+    <Pagination @pagination-click="paginationHandler"/>
+    <div> page {{page}} out of {{Math.ceil(getExpenses.length/5)}} </div>
 
   </div>
 </template>
 
 <script>
 import Pagination from './Pagination.vue'
+import { mapGetters } from 'vuex'
+
 export default {
   components: { Pagination },
   name: 'ExpensesList',
-  props: {
-    list: Array
-  },
   data() {
     return {
       page: 1
@@ -40,8 +39,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'getExpenses'
+    ]),
     slicedList() {
-      return this.list.slice( 5 * (this.page-1), 5 * this.page )
+      return this.getExpenses.slice( 5 * (this.page-1), 5 * this.page )
     }
   }
 }
