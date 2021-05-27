@@ -8,43 +8,43 @@
         <th>Value</th>
       </tr>
       <tr class="expense" v-for="(expense, idx) in slicedList"  :key="idx">
-          <td> {{ 5 * (page-1) + idx + 1}} </td>
+          <td> {{ n * (cur-1) + idx + 1}} </td>
           <td> {{ expense.date }} </td>
           <td> {{ expense.category }} </td>
           <td> {{ expense.value }} </td>
       </tr>
     </table>
-    <Pagination @pagination-click="paginationHandler"/>
-    <div> page {{page}} out of {{Math.ceil(getExpenses.length/5)}} </div>
-
   </div>
 </template>
 
 <script>
-import Pagination from './Pagination.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+
 
 export default {
-  components: { Pagination },
+  props: ['n', 'cur'],
   name: 'ExpensesList',
   data() {
     return {
-      page: 1
     }
   },
   methods: {
-    paginationHandler(n) {
-      this.page = n
-
-    }
+    ...mapActions([
+      'fetchData',
+      'fetchCategories'
+    ])
   },
   computed: {
     ...mapGetters([
       'getExpenses'
     ]),
     slicedList() {
-      return this.getExpenses.slice( 5 * (this.page-1), 5 * this.page )
+      return this.getExpenses.slice( this.n * (this.cur-1), this.n * this.cur )
     }
+  },
+  mounted() {
+    this.fetchData()
+    this.fetchCategories()
   }
 }
 </script>

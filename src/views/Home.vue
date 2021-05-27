@@ -1,44 +1,50 @@
 <template>
   <div class="home">
-    <h1>{{ title }}</h1>
-    <button @click="add"> {{ buttonTitle }} </button>
+    <h1>My expenses</h1>
+    <button @click="onClick"> {{ buttonTitle }} </button>
     <ExpenseForm v-show="showExpenseForm"/>
-    <ExpensesList/>
+    <ExpensesList :n="n" :cur="page"/>
+    <Pagination :n="n" :cur="page" @pagination="paginationHandler" />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 // @ is an alias to /src
 import ExpensesList from '@/components/ExpensesList.vue'
 import ExpenseForm from '@/components/ExpenseForm.vue'
+import Pagination from '@/components/Pagination.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
     ExpensesList,
-    ExpenseForm
+    ExpenseForm,
+    Pagination
   },
   data() {
     return {
-      title: 'My finances dashboard',
       showExpenseForm: false,
-      buttonTitle: 'Add expense +'
+      buttonTitle: 'Add expense +',
+      page: 1,
+      n: 10
     }
   },
   methods: {
-    ...mapActions([
-      'fetchData',
-      'fetchCategories'
-    ]),
-    add() {
+    onClick() {
       this.showExpenseForm = !this.showExpenseForm
       this.buttonTitle = this.buttonTitle==='hide expense form' ? 'Add expense +' : 'hide expense form'
+    },
+    paginationHandler(i) {
+      this.page = i
     }
   },
-  mounted() {
-    this.fetchData()
-    this.fetchCategories()
+  computed: {
+    ...mapGetters(
+      [
+        'getExpenses'
+      ]
+    )
   }
 }
 
