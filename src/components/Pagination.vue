@@ -1,11 +1,16 @@
 <template>
     <div>
         <div> press to show a page: </div>
-        <button @click="$emit('pagination', cur - 1 > 0 ? cur - 1 : cur)"> &lt; </button>
-        <span v-for="i in pages" :key="i">&nbsp;
-            <button @click="$emit('pagination',i)">{{i}}</button>&nbsp;
-        </span>
-        <button @click="$emit('pagination', cur + 1 <= pages ? cur + 1 : cur)"> &gt;  </button>
+        <div :class="[$style.wrapper]">
+            <div @click="onClick(cur - 1)"> &lt; </div>
+            <div
+            v-for="i in pages" :key="i" 
+            @click="onClick(i)" 
+            :class="{[$style.active]: cur === i }">
+                {{i}}
+            </div>
+            <div @click="onClick(cur + 1)"> &gt;  </div>
+        </div>
         <div> page {{cur}} out of {{pages}} </div>
     </div>
 </template>
@@ -20,7 +25,12 @@ export default {
         }
     },
     methods: {
-
+        onClick(page) {
+            if (page < 1 || page > this.pages) {
+                return
+            }
+            this.$emit('pagination', page)
+        }
     },
     computed: {
         ...mapGetters(['getExpenses']),
@@ -33,6 +43,22 @@ export default {
 }
 </script>
 
-<style>
-
+<style module>
+    .wrapper {
+        display: flex;
+    }
+    .wrapper div {
+        background: lightcyan;
+        border: 0px;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .wrapper .active {
+        background: blue
+    }
 </style>

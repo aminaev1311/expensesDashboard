@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <h1>My expenses</h1>
+    <header>
+          <h1>My expenses</h1>
+    </header>
     <button @click="onClick"> {{ buttonTitle }} </button>
     <ExpenseForm v-show="showExpenseForm"/>
     <ExpensesList :n="n" :cur="page"/>
