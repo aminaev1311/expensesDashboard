@@ -1,9 +1,12 @@
 <template>
   <div class="home">
-    <h1>{{ title }}</h1>
-    <button @click="add"> {{ buttonTitle }} </button>
-    <ExpenseForm @save="save" v-if="showExpenseForm"/>
-    <ExpensesList :list="expenses"/>
+    <header>
+          <h1>My expenses</h1>
+    </header>
+    <button @click="onClick"> {{ buttonTitle }} </button>
+    <ExpenseForm v-show="showExpenseForm"/>
+    <ExpensesList :n="n" :cur="page"/>
+    <Pagination :n="n" :cur="page" @pagination="paginationHandler" />
   </div>
 </template>
 
@@ -11,145 +14,39 @@
 // @ is an alias to /src
 import ExpensesList from '@/components/ExpensesList.vue'
 import ExpenseForm from '@/components/ExpenseForm.vue'
+import Pagination from '@/components/Pagination.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
     ExpensesList,
-    ExpenseForm
+    ExpenseForm,
+    Pagination
   },
   data() {
     return {
-      title: 'My finances dashboard',
       showExpenseForm: false,
       buttonTitle: 'Add expense +',
-      expenses: [
-        {
-          date: '14/03/2021',
-          category: 'food',
-          value: 240
-        },
-        {
-          date: '15/04/2021',
-          category: 'education',
-          value: 1000
-        },
-        {
-          date: '16/05/2021',
-          category: 'fitness',
-          value: 1050
-        },
-        {
-          date: '21/06/2021',
-          category: 'health',
-          value: 7000
-        },
-        {
-          date: '18/06/2021',
-          category: 'health',
-          value: 700
-        },
-        {
-          date: '17/06/2022',
-          category: 'education',
-          value: 7000
-        },
-        {
-          date: '17/06/2023',
-          category: 'entertainment',
-          value: 70
-        },
-        {
-          date: '21/06/2021',
-          category: 'health',
-          value: 7000
-        },
-        {
-          date: '18/06/2021',
-          category: 'health',
-          value: 700
-        },
-        {
-          date: '17/06/2022',
-          category: 'education',
-          value: 7000
-        },
-        {
-          date: '17/06/2023',
-          category: 'entertainment',
-          value: 70
-        },
-        {
-          date: '21/06/2021',
-          category: 'health',
-          value: 7000
-        },
-        {
-          date: '18/06/2021',
-          category: 'health',
-          value: 700
-        },
-        {
-          date: '17/06/2022',
-          category: 'education',
-          value: 7000
-        },
-        {
-          date: '17/06/2023',
-          category: 'entertainment',
-          value: 70
-        },
-        {
-          date: '21/06/2021',
-          category: 'health',
-          value: 7000
-        },
-        {
-          date: '18/06/2021',
-          category: 'health',
-          value: 700
-        },
-        {
-          date: '17/06/2022',
-          category: 'education',
-          value: 7000
-        },
-        {
-          date: '17/06/2023',
-          category: 'entertainment',
-          value: 70
-        },
-        {
-          date: '21/06/2021',
-          category: 'health',
-          value: 7000
-        },
-        {
-          date: '18/06/2021',
-          category: 'health',
-          value: 700
-        },
-        {
-          date: '17/06/2022',
-          category: 'education',
-          value: 7000
-        },
-        {
-          date: '17/06/2023',
-          category: 'entertainment',
-          value: 70
-        }
-      ]
+      page: 1,
+      n: 10
     }
   },
   methods: {
-    save(obj) {
-      this.expenses.push(obj)
-    },
-    add() {
+    onClick() {
       this.showExpenseForm = !this.showExpenseForm
       this.buttonTitle = this.buttonTitle==='hide expense form' ? 'Add expense +' : 'hide expense form'
+    },
+    paginationHandler(i) {
+      this.page = i
     }
+  },
+  computed: {
+    ...mapGetters(
+      [
+        'getExpenses'
+      ]
+    )
   }
 }
 
