@@ -18,7 +18,7 @@ import Pagination from '@/components/Pagination.vue'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Home',
+  name: 'PageDashboard',
   components: {
     ExpensesList,
     ExpenseForm,
