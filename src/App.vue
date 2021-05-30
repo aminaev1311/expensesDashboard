@@ -6,9 +6,9 @@
     </div> -->
     <!-- <router-view/> -->
     <header>
-      <a href="/dashboard" @click="page = 'dashboard'">dashboard</a>
-      <a href="/about" @click="page = 'about'">about</a>
-      <a href="/page404" @click="page = 'page404'">404</a>
+      <a href="/dashboard">dashboard</a>
+      <a href="/about">about</a>
+      <a href="/page404">404</a>
     </header>
     <main>
       <PageDashboard v-if="page === 'dashboard'"/>
@@ -36,16 +36,27 @@ export default {
   },
   methods: {
     setPage() {
-      this.page = location.hash.slice(1)
+      this.page = location.pathname.slice(1)
     }
     
   },
   mounted() {
-    this.page = 'dashboard'
-    this.setPage() //set the current page after hash
-    window.addEventListener('hashchange', () => {
-      this.setPage() //changes the page after url change
+    this.setPage()
+
+    const urlsArray = document.querySelectorAll('a')
+
+    urlsArray.forEach( url => {
+      url.addEventListener('click', (event) => {
+        event.preventDefault()
+        history.pushState({}, '', url.href)
+        this.setPage()
+      })
     })
+
+    window.addEventListener('popstate', ()=>{
+      this.setPage()
+    })
+    
   }
 }
 </script>
