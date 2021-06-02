@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 import CategoryForm from './CategoryForm.vue'
 
 export default {
@@ -35,6 +35,9 @@ export default {
         )
     },
     methods: {
+        ...mapActions([
+            'fetchCategories'
+        ]),
         ...mapMutations([
             'addExpense'
         ]),
@@ -44,9 +47,25 @@ export default {
             this.category = null,
             this.value = null
         },
+        getFormattedDate() {
+            const todayTime = new Date();
+            const month = String(todayTime.getMonth() + 1). padStart(2, '0')
+            const day = String(todayTime.getDate()). padStart(2, '0')
+            const year = String(todayTime.getFullYear()). padStart(2, '0')
+            return year + "-" + month + "-" + day
+        }
     },
     mounted() {
+        this.fetchCategories()
+        this.date = this.getFormattedDate()
+        this.category =  this.$route.params.category || null
+        this.value = +this.$route.query.value || null
+
+        if (this.category && this.value) {
+            this.addExpense({date: this.date, category: this.category, value: this.value}); //this saves the expense to the store
+        }
     }
+    
 }
 </script>
 

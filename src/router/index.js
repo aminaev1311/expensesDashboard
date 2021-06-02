@@ -1,29 +1,45 @@
-// import Vue from 'vue'
-// import VueRouter from 'vue-router'
-// import PageDashboard from '../views/PageDashboard.vue'
+import Vue from 'vue'
+import Router from 'vue-router'
+import PageDashboard from '../views/PageDashboard.vue'
+import PageAbout from '../views/PageAbout.vue'
+import Page404 from '../views/Page404.vue'
+import ExpenseForm from '../components/ExpenseForm.vue'
 
-// Vue.use(VueRouter)
+Vue.use(Router)
 
-// const routes = [
-//   {
-//     path: '/',
-//     name: 'PageDashboard',
-//     component: PageDashboard
-//   },
-//   {
-//     path: '/about',
-//     name: 'About',
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-//   }
-// ]
+const router = new Router({
+    mode: 'history',
+    routes: [
+        {
+            path: '/dashboard',
+            name: 'dashboardPage',
+            component: PageDashboard
+        },
+        {
+            path: '/dashboard/:page',
+            name: 'dashboardPage',
+            component: PageDashboard
+        },
+        {
+            path: '/about*',
+            name: 'about',
+            component: PageAbout
+        },
+        {
+            path: '/add/payment/:category?',
+            name: 'addPayment',
+            component: ExpenseForm
+        },
+        {
+            path: '*',
+            name: 'NotFound',
+            component: Page404
+        }
+    ]
+})
 
-// const router = new VueRouter({
-//   mode: 'history',
-//   base: process.env.BASE_URL,
-//   routes
-// })
+router.beforeEach()
 
-// export default router
+router.afterEach()
+
+export default router

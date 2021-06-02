@@ -1,62 +1,29 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <!-- <router-view/> -->
     <header>
-      <a href="/dashboard">dashboard</a>
-      <a href="/about">about</a>
-      <a href="/page404">404</a>
+      <router-link to="/dashboard">Dashboard</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/404">404</router-link>
     </header>
     <main>
-      <PageDashboard v-if="page === 'dashboard'"/>
-      <PageAbout v-if="page === 'about'"/>
-      <Page404 v-if="page === 'page404'"/>
+      <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import PageDashboard from './views/PageDashboard'
-import PageAbout from './views/About'
-import Page404 from './views/Page404'
-
 export default {
   components: {
-    PageDashboard,
-    PageAbout,
-    Page404
   },
   data() {
     return {
-      page: 'dashboard'
     }
   },
-  methods: {
-    setPage() {
-      this.page = location.pathname.slice(1)
-    }
-    
+  methods: {    
   },
   mounted() {
-    this.setPage()
-
-    const urlsArray = document.querySelectorAll('a')
-
-    urlsArray.forEach( url => {
-      url.addEventListener('click', (event) => {
-        event.preventDefault()
-        history.pushState({}, '', url.href)
-        this.setPage()
-      })
-    })
-
-    window.addEventListener('popstate', ()=>{
-      this.setPage()
-    })
-    
+    // this.$router.push({ name: 'about' })
+    // console.log(this.$router)
   }
 }
 </script>

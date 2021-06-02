@@ -30,9 +30,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchData',
-      'fetchCategories'
-    ])
+      'fetchData'    ])
   },
   computed: {
     ...mapGetters([
@@ -44,7 +42,6 @@ export default {
   },
   mounted() {
     this.fetchData()
-    this.fetchCategories()
   }
 }
 </script>

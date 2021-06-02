@@ -47,6 +47,15 @@ export default {
         'getExpenses'
       ]
     )
+  },
+  mounted () {
+    this.page = +this.$route.params.page || 1
+    // if (this.$route.params.page === undefined) {
+    //       this.page = +this.$route.params.page
+    // } else {
+    //   this.page = 1
+    // } 
+    //why this notation doesn't work?
   }
 }
 
