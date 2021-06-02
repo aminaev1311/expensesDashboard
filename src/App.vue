@@ -1,12 +1,33 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
+    <header>
+      <router-link to="/dashboard">Dashboard</router-link>
       <router-link to="/about">About</router-link>
-    </div> -->
-    <router-view/>
+      <router-link to="/404">404</router-link>
+    </header>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
+
+<script>
+export default {
+  components: {
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {    
+  },
+  mounted() {
+    // this.$router.push({ name: 'about' })
+    // console.log(this.$router)
+  }
+}
+</script>
+
 
 <style>
 #app {
