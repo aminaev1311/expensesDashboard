@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 
 export default {
@@ -29,8 +29,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'fetchData'    ])
   },
   computed: {
     ...mapGetters([
@@ -41,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchData()
+    
   }
 }
 </script>

@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
   },
@@ -19,11 +20,23 @@ export default {
     return {
     }
   },
-  methods: {    
+  methods: {  
+    ...mapActions([
+    'fetchData',
+    'fetchCategories'
+    ])  
+  },
+  computed: {
+    ...mapGetters(['getExpenses'])
   },
   mounted() {
-    // this.$router.push({ name: 'about' })
-    // console.log(this.$router)
+    // if (!this.getExpenses) {
+    //   this.fetchData()
+    // }
+
+    // this.fetchData()
+    // this.fetchCategories()
+    // console.log(!this.getExpenses)
   }
 }
 </script>

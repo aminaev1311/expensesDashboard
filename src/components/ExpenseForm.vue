@@ -3,7 +3,7 @@
       <input type="date" v-model="date" placeholder="date">
       <br>
       <select v-model="category">
-        <option v-for="option in getCategories" :key="option" :value="option">{{option}}</option>
+        <option v-for="(option,idx) in getCategories" :key="idx" :value="option">{{option}}</option>
       </select>
       <CategoryForm />
       <br>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import CategoryForm from './CategoryForm.vue'
 
 export default {
@@ -35,9 +35,6 @@ export default {
         )
     },
     methods: {
-        ...mapActions([
-            'fetchCategories'
-        ]),
         ...mapMutations([
             'addExpense'
         ]),
@@ -56,7 +53,6 @@ export default {
         }
     },
     mounted() {
-        this.fetchCategories()
         this.date = this.getFormattedDate()
         this.category =  this.$route.params.category || null
         this.value = +this.$route.query.value || null

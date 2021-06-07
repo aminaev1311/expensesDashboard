@@ -9,8 +9,8 @@ export default new Vuex.Store({
     categories: []
   },
   mutations: {
-    setExpensesData(state, payload) {
-      state.expenses = payload
+    setExpenses(state, payload) {
+      state.expenses.push(...payload)
     },
     addExpense(state, payload) {
       state.expenses.push(payload)
@@ -45,7 +45,7 @@ export default new Vuex.Store({
           , 500) 
         })
           .then(res => {
-            commit('setExpensesData', res)
+            commit('setExpenses', res)
           }) 
     },
     fetchCategories ( {commit} ) {

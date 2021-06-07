@@ -11,6 +11,11 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            name: 'home',
+            component: PageDashboard
+        },
+        {
             path: '/dashboard',
             name: 'dashboardPage',
             component: PageDashboard
@@ -38,8 +43,27 @@ const router = new Router({
     ]
 })
 
-router.beforeEach()
+// const userAuth = false
 
-router.afterEach()
+// router.beforeEach( (to, from, next) => {
+//     if (to.name === 'dashboardPage' && !userAuth ) {
+//         next({ name: 'NotFound'})
+//     } else {
+//         next()
+//     }
+// }
+// )
+
+router.afterEach( (to) => {
+    const titles = {
+        home: 'Home',
+        dashboardPage: 'Dashboard',
+        about: 'About Us',
+        NotFound: 'Page not found'
+    }
+    document.title = titles[to.name]
+}
+    // from.$event.preventDefault() 
+)
 
 export default router
