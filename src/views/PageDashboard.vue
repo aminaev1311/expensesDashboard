@@ -3,8 +3,7 @@
     <header>
           <h1>My expenses</h1>
     </header>
-    <button @click="showExpenseModal = !showExpenseModal"> Show/Hide Modal </button>
-    <AddPaymentModal v-show="showExpenseModal" @hidePaymentModal="showExpenseModal = !showExpenseModal"/>
+    <button @click="onModalShow"> Show Modal </button>
     <button @click="onClick" > {{ buttonTitle }} </button>
     <ExpenseForm v-show="showExpenseForm"/>
     <ExpensesList :n="n" :cur="page"/>
@@ -17,7 +16,6 @@
 import ExpensesList from '@/components/ExpensesList.vue'
 import ExpenseForm from '@/components/ExpenseForm.vue'
 import Pagination from '@/components/Pagination.vue'
-import AddPaymentModal from '@/components/modalWindows/AddPaymentModal.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -25,8 +23,7 @@ export default {
   components: {
     ExpensesList,
     ExpenseForm,
-    Pagination,
-    AddPaymentModal
+    Pagination
   },
   data() {
     return {
@@ -34,7 +31,7 @@ export default {
       buttonTitle: 'Add expense +',
       page: 1,
       n: 10,
-      showExpenseModal: false
+      showModal: false
     }
   },
   methods: {
@@ -42,6 +39,11 @@ export default {
       this.showExpenseForm = !this.showExpenseForm
       this.buttonTitle = this.buttonTitle==='hide expense form' ? 'Add expense +' : 'hide expense form'
     },
+
+    onModalShow() {
+        this.$modal.show({ name: 'paymentform', settings: {} } )
+    },
+
     paginationHandler(i) {
       this.page = i
     }

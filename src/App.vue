@@ -8,35 +8,52 @@
     <main>
       <router-view />
     </main>
+    <Modal modal="paymentform" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Modal from './components/modalWindows/modal'
+
 export default {
   components: {
+    Modal
   },
   data() {
     return {
+      modal: ''
     }
   },
   methods: {  
     ...mapActions([
     'fetchData',
     'fetchCategories'
-    ])  
+    ]),
+
+    onShow( ) {
+      // this.$modal.show({name: 'modal'})
+      this.modal = 'modal'
+      this.$modal.show({name: this.modal})
+    },
+
+    onClose() {
+      this.modal = ''
+      // this.$modal.close()
+    }
+
   },
   computed: {
     ...mapGetters(['getExpenses'])
   },
   mounted() {
-    // if (!this.getExpenses) {
-    //   this.fetchData()
-    // }
-
-    // this.fetchData()
-    // this.fetchCategories()
-    // console.log(!this.getExpenses)
+    // this.$modal.EventBus.$on('show', this.onShow )
+    // this.$modal.EventBus.$on('close', this.onClose )
+    console.log(this.$modal)
+    this.$modal.show()
+    this.$modal.close()
+    // this.$modal.eventBus.$emit('show', {name: 'paymentform'})
+    // this.$modal.show('paymentform')
   }
 }
 </script>
