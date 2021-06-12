@@ -2,18 +2,24 @@
   <div>
       <input type="date" v-model="date" placeholder="date">
       <br>
-      <input type="text" v-model="category" placeholder="category">
+      <select v-model="category">
+        <option v-for="(option,idx) in getCategories" :key="idx" :value="option">{{option}}</option>
+      </select>
+      <CategoryForm />
       <br>
       <input type="number" v-model.number="value" placeholder="amount">
       <br>
       <button @click="save">Save</button>
-      <!-- <button @click="$emit('save', {date: date, category: category, value: value})">Save</button> -->
   </div>
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
+import CategoryForm from './CategoryForm.vue'
+
 export default {
-    name: 'ExpensesForm',
+    components: { CategoryForm },
+    name: 'ExpenseForm',
     data() {
         return {
             date: null,
@@ -21,14 +27,41 @@ export default {
             value: null
         }
     },
+    computed: {
+        ...mapGetters(
+            [
+                'getCategories'
+            ]
+        )
+    },
     methods: {
+        ...mapMutations([
+            'addExpense'
+        ]),
         save() {
-            this.$emit('save', {date: this.date, category: this.category, value: this.value})
+            this.addExpense({date: this.date, category: this.category, value: this.value});
             this.date = null
             this.category = null,
             this.value = null
+        },
+        getFormattedDate() {
+            const todayTime = new Date();
+            const month = String(todayTime.getMonth() + 1). padStart(2, '0')
+            const day = String(todayTime.getDate()). padStart(2, '0')
+            const year = String(todayTime.getFullYear()). padStart(2, '0')
+            return year + "-" + month + "-" + day
+        }
+    },
+    mounted() {
+        this.date = this.getFormattedDate()
+        this.category =  this.$route.params.category || null
+        this.value = +this.$route.query.value || null
+
+        if (this.category && this.value) {
+            this.addExpense({date: this.date, category: this.category, value: this.value}); //this saves the expense to the store
         }
     }
+    
 }
 </script>
 

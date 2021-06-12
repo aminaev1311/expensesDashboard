@@ -1,29 +1,69 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Router from 'vue-router'
+import PageDashboard from '../views/PageDashboard.vue'
+import PageAbout from '../views/PageAbout.vue'
+import Page404 from '../views/Page404.vue'
+import ExpenseForm from '../components/ExpenseForm.vue'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+const router = new Router({
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: PageDashboard
+        },
+        {
+            path: '/dashboard',
+            name: 'dashboardPage',
+            component: PageDashboard
+        },
+        {
+            path: '/dashboard/:page',
+            name: 'dashboardPage',
+            component: PageDashboard
+        },
+        {
+            path: '/about*',
+            name: 'about',
+            component: PageAbout
+        },
+        {
+            path: '/add/payment/:category?',
+            name: 'addPayment',
+            component: ExpenseForm
+        },
+        {
+            path: '*',
+            name: 'NotFound',
+            component: Page404
+        }
+    ]
 })
+
+// const userAuth = false
+
+// router.beforeEach( (to, from, next) => {
+//     if (to.name === 'dashboardPage' && !userAuth ) {
+//         next({ name: 'NotFound'})
+//     } else {
+//         next()
+//     }
+// }
+// )
+
+router.afterEach( (to) => {
+    const titles = {
+        home: 'Home',
+        dashboardPage: 'Dashboard',
+        about: 'About Us',
+        NotFound: 'Page not found'
+    }
+    document.title = titles[to.name]
+}
+    // from.$event.preventDefault() 
+)
 
 export default router

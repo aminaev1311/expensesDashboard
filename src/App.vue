@@ -1,14 +1,52 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
+    <Modal />
+    <Context />
+    <header>
+      <router-link to="/dashboard">Dashboard</router-link>
       <router-link to="/about">About</router-link>
-    </div> -->
-    <router-view/>
+      <router-link to="/404">404</router-link>
+    </header>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
+<script>
+import { mapActions, mapGetters } from 'vuex'
+import Modal from './components/modalWindows/modal'
+import Context from './components/contextMenu/context.vue'
+
+export default {
+  components: {
+    Modal,
+    Context
+  },
+  data() {
+    return {
+      modal: ''
+    }
+  },
+  methods: {  
+    ...mapActions([
+    'fetchData',
+    'fetchCategories'
+    ]),
+  },
+  computed: {
+    ...mapGetters(['getExpenses'])
+  },
+  mounted() {
+  }
+}
+</script>
+
+
 <style>
+body {
+  z-index: -1;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
