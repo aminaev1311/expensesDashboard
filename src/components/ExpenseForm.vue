@@ -19,7 +19,7 @@ import CategoryForm from './CategoryForm.vue'
 
 export default {
     components: { CategoryForm },
-    name: 'ExpensesForm',
+    name: 'ExpenseForm',
     data() {
         return {
             date: null,

@@ -6,7 +6,7 @@ export default {
 
         this.installed = true
 
-        Vue.prototype.$modal = {
+        Vue.prototype.$context = {
 
             eventBus: new Vue(),
 

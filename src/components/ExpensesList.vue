@@ -3,15 +3,18 @@
     <table>
       <tr>
         <th>#</th>
+        <th>ID</th>
         <th>Date</th>
         <th>Category</th>
         <th>Value</th>
       </tr>
       <tr class="expense" v-for="(expense, idx) in slicedList"  :key="idx">
           <td> {{ n * (cur-1) + idx + 1}} </td>
+          <td> {{ expense.id }} </td>
           <td> {{ expense.date }} </td>
           <td> {{ expense.category }} </td>
           <td> {{ expense.value }} </td>
+          <td style="font-size:30px;" @click="onContextClick(expense.id)">&nbsp;...&nbsp;</td>
       </tr>
     </table>
   </div>
@@ -29,6 +32,10 @@ export default {
     }
   },
   methods: {
+    onContextClick(id) {
+      console.log('context clicked', id)
+      this.$context.show(id)
+    }
   },
   computed: {
     ...mapGetters([

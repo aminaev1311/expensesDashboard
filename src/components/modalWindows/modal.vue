@@ -1,9 +1,10 @@
 <template>
     <div :class="[$style.wrapper]" v-if="show" >
-        <div :class="[$style.overlay]">
-                <header>{{ show }}</header>
-                <ExpenseForm v-if=" show === 'paymentform' " />
-                <button @click="onClose">Close</button>
+        <div :class="[$style.overlay]"></div>
+        <div :class="[$style.content]">
+            <header>{{ show }}</header>
+            <component :is="show" />
+            <button @click="onClose">Close</button>
         </div>
     </div>
 </template>
@@ -13,9 +14,6 @@ import ExpenseForm from '../ExpenseForm'
 
 export default {
     name: 'Modal',
-    props: {
-        modal: String
-    },
     components: { 
         ExpenseForm 
     },
@@ -34,6 +32,8 @@ export default {
             this.show = ''
         }
     },
+    computed: {
+    },
     mounted() {
         this.$modal.eventBus.$on('show', this.onShow)
         this.$modal.eventBus.$on('close', this.onClose )
@@ -43,6 +43,20 @@ export default {
 
 <style module>
     .wrapper {
+        border: 1px solid red;
+        position: absolute;
+        z-index: 1;
+        background: rgba(50, 50, 50, 0.5);
+    }
+    .overlay {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+    /* .wrapper {
         background: darkgray;
         position: absolute;
         width: 100vw;
@@ -62,5 +76,5 @@ export default {
         flex-direction: column;
         width: 500px;
         padding: 16px;
-    }
+    } */
 </style>

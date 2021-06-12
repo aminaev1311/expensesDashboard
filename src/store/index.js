@@ -34,6 +34,7 @@ export default new Vuex.Store({
               const items = []
               for (let i = 1; i < 100; i++) {
                 const item = {
+                  id: i,
                   date: `12.03.${i}`,
                   category: i%2===0 ? 'Education' : 'Food',
                   value: i

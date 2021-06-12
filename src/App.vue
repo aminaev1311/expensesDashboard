@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <Modal />
+    <Context />
     <header>
       <router-link to="/dashboard">Dashboard</router-link>
       <router-link to="/about">About</router-link>
@@ -8,17 +10,18 @@
     <main>
       <router-view />
     </main>
-    <Modal modal="paymentform" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Modal from './components/modalWindows/modal'
+import Context from './components/contextMenu/context.vue'
 
 export default {
   components: {
-    Modal
+    Modal,
+    Context
   },
   data() {
     return {
@@ -30,36 +33,20 @@ export default {
     'fetchData',
     'fetchCategories'
     ]),
-
-    onShow( ) {
-      // this.$modal.show({name: 'modal'})
-      this.modal = 'modal'
-      this.$modal.show({name: this.modal})
-    },
-
-    onClose() {
-      this.modal = ''
-      // this.$modal.close()
-    }
-
   },
   computed: {
     ...mapGetters(['getExpenses'])
   },
   mounted() {
-    // this.$modal.EventBus.$on('show', this.onShow )
-    // this.$modal.EventBus.$on('close', this.onClose )
-    console.log(this.$modal)
-    this.$modal.show()
-    this.$modal.close()
-    // this.$modal.eventBus.$emit('show', {name: 'paymentform'})
-    // this.$modal.show('paymentform')
   }
 }
 </script>
 
 
 <style>
+body {
+  z-index: -1;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

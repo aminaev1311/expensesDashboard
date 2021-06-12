@@ -3,7 +3,10 @@
     <header>
           <h1>My expenses</h1>
     </header>
-    <button @click="onModalShow"> Show Modal </button>
+    <div>
+      <button @click="clickHander"> Open/Close Modal </button>
+      <!-- <button @click="onModalClose"> Close Modal </button> -->
+    </div>
     <button @click="onClick" > {{ buttonTitle }} </button>
     <ExpenseForm v-show="showExpenseForm"/>
     <ExpensesList :n="n" :cur="page"/>
@@ -40,8 +43,22 @@ export default {
       this.buttonTitle = this.buttonTitle==='hide expense form' ? 'Add expense +' : 'hide expense form'
     },
 
-    onModalShow() {
-        this.$modal.show({ name: 'paymentform', settings: {} } )
+    // onModalShow() {
+    //     this.$modal.show({ name: 'paymentform', settings: {} } )
+    // },
+
+    // onModalClose() {
+    //   this.$modal.close()
+    // },
+
+    clickHander() {
+      this.showModal = !this.showModal
+
+      if (this.showModal) {
+        this.$modal.show({ name: 'ExpenseForm', settings: {} } ) 
+      } else {
+        this.$modal.close() 
+      } 
     },
 
     paginationHandler(i) {
