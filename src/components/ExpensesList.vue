@@ -14,7 +14,7 @@
           <td> {{ expense.date }} </td>
           <td> {{ expense.category }} </td>
           <td> {{ expense.value }} </td>
-          <td style="font-size:30px;" @click="onContextClick(expense.id)">&nbsp;...&nbsp;</td>
+          <td style="font-size:30px;" @click="onContextClick(expense)">&nbsp;...&nbsp;</td>
       </tr>
     </table>
   </div>
@@ -32,9 +32,9 @@ export default {
     }
   },
   methods: {
-    onContextClick(id) {
-      console.log('context clicked', id)
-      this.$context.show(id)
+    onContextClick(expense) {
+      console.log('context clicked', expense.id)
+      this.$context.show(expense)
     }
   },
   computed: {

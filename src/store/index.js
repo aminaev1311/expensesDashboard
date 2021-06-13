@@ -25,6 +25,17 @@ export default new Vuex.Store({
       } else {
         console.log(`${payload} already exists`)
       }
+    },
+    deleteExpense(state, payload) {
+      const index = state.expenses.findIndex( item => item.id === payload)
+      const item = state.expenses.splice(index,1)
+      console.log("item deleted: ", item)
+    },
+    editExpense(state, {id, category, value, date}) {
+      let expense = state.expenses.find( item => item.id === id)
+      expense.value = value
+      expense.category = category
+      expense.date = date
     }
   },
   actions: {
@@ -62,6 +73,12 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    // getExpenseById: state => (id) => state.expenses.find( item => item.id === id),
+    getExpenseById: state => {
+      return function(id) {
+        return state.expenses.find( item => item.id === id)
+      }
+    },
     getExpenses: state => state.expenses,
     getExpensesSum: state => state.expenses.reduce( (res, cur) => res + cur.value ,0),
     getCategories: state => state.categories

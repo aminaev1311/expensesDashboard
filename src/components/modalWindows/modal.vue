@@ -1,6 +1,6 @@
 <template>
-    <div :class="[$style.wrapper]" v-if="show" >
-        <div :class="[$style.overlay]"></div>
+    <div :class="[$style.wrapper]" v-if="show" @click.self="onClose">
+        <!-- <div :class="[$style.overlay]"></div> -->
         <div :class="[$style.content]">
             <header>{{ show }}</header>
             <component :is="show" />
@@ -44,9 +44,17 @@ export default {
 <style module>
     .wrapper {
         border: 1px solid red;
-        position: absolute;
-        z-index: 1;
-        background: rgba(50, 50, 50, 0.5);
+        position: fixed;
+        z-index: 500;
+        background: rgba(50, 50, 50, 0.918);
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(4px);
     }
     .overlay {
         position: relative;

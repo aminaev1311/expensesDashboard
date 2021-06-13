@@ -50,6 +50,12 @@ export default {
             const day = String(todayTime.getDate()). padStart(2, '0')
             const year = String(todayTime.getFullYear()). padStart(2, '0')
             return year + "-" + month + "-" + day
+        },
+        onShow( {value, category, date} ) {
+            console.log("onShow in Expense Form", value, category, date)
+            this.category = category
+            this.value = value
+            this.date = date
         }
     },
     mounted() {
@@ -60,6 +66,8 @@ export default {
         if (this.category && this.value) {
             this.addExpense({date: this.date, category: this.category, value: this.value}); //this saves the expense to the store
         }
+
+        this.$modal.eventBus.$on('show', this.onShow)
     }
     
 }
