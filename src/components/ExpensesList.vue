@@ -3,46 +3,50 @@
     <table>
       <tr>
         <th>#</th>
+        <th>ID</th>
         <th>Date</th>
         <th>Category</th>
         <th>Value</th>
       </tr>
       <tr class="expense" v-for="(expense, idx) in slicedList"  :key="idx">
-          <td> {{ 5 * (page-1) + idx + 1}} </td>
+          <td> {{ n * (cur-1) + idx + 1}} </td>
+          <td> {{ expense.id }} </td>
           <td> {{ expense.date }} </td>
           <td> {{ expense.category }} </td>
           <td> {{ expense.value }} </td>
+          <td style="font-size:30px;" @click="onContextClick(expense)">&nbsp;...&nbsp;</td>
       </tr>
     </table>
-    <Pagination :list="list" @pagination-click="paginationHandler"/>
-    <div> page {{page}} out of {{Math.ceil(list.length/5)}} </div>
-
   </div>
 </template>
 
 <script>
-import Pagination from './Pagination.vue'
+import { mapGetters } from 'vuex'
+
+
 export default {
-  components: { Pagination },
+  props: ['n', 'cur'],
   name: 'ExpensesList',
-  props: {
-    list: Array
-  },
   data() {
     return {
-      page: 1
     }
   },
   methods: {
-    paginationHandler(n) {
-      this.page = n
-
+    onContextClick(expense) {
+      console.log('context clicked', expense)
+      this.$context.show(expense)
     }
   },
   computed: {
+    ...mapGetters([
+      'getExpenses'
+    ]),
     slicedList() {
-      return this.list.slice( 5 * (this.page-1), 5 * this.page )
+      return this.getExpenses.slice( this.n * (this.cur-1), this.n * this.cur )
     }
+  },
+  mounted() {
+    
   }
 }
 </script>
