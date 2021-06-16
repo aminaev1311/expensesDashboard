@@ -9,21 +9,21 @@ export default new Vuex.Store({
     categories: []
   },
   mutations: {
-    setExpenses(state, payload) {
+    setExpenses(state, payload ) {
       state.expenses.push(...payload)
     },
-    addExpense(state, payload) {
-      state.expenses.push(payload)
+    addExpense(state, {date, category, value }) {
+      if (date && category && value) {
+        const id = state.expenses.length + 1
+        state.expenses.push({id, date, category, value })
+      }
     },
     setCategories(state, payload) {
       state.categories = payload
     },
     addCategory(state, payload) {
       if (!state.categories.includes(payload)) {
-        console.log(`adding ${payload}`)
         state.categories.push(payload)
-      } else {
-        console.log(`${payload} already exists`)
       }
     },
     deleteExpense(state, payload) {
@@ -33,9 +33,11 @@ export default new Vuex.Store({
     },
     editExpense(state, {id, category, value, date}) {
       let expense = state.expenses.find( item => item.id === id)
-      expense.value = value
-      expense.category = category
-      expense.date = date
+      if (date && category && value) {
+        expense.value = value
+        expense.category = category
+        expense.date = date
+      }
     }
   },
   actions: {
@@ -43,11 +45,11 @@ export default new Vuex.Store({
         return new Promise( (resolve) => {
           setTimeout( () => {
               const items = []
-              for (let i = 1; i < 100; i++) {
+              for (let i = 1; i < 50; i++) {
                 const item = {
                   id: i,
-                  date: `12.03.${i}`,
-                  category: i%2===0 ? 'Education' : 'Food',
+                  date: i<10? `200${i}-03-12`:`20${i}-03-12`,
+                  category: i%2===0 ? 'education' : 'food',
                   value: i
                 }
                 items.push(item)

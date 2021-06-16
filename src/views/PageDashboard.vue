@@ -4,11 +4,10 @@
           <h1>My expenses</h1>
     </header>
     <div>
-      <button @click="clickHander"> Open/Close Modal </button>
-      <!-- <button @click="onModalClose"> Close Modal </button> -->
+      <button @click="modalClickHander"> Add Expense Modal </button>
     </div>
-    <button @click="onClick" > {{ buttonTitle }} </button>
-    <ExpenseForm v-show="showExpenseForm"/>
+    <!-- <button @click="onClick" > {{ buttonTitle }} </button> -->
+    <!-- <ExpenseForm v-show="showExpenseForm"/> -->
     <ExpensesList :n="n" :cur="page"/>
     <Pagination :n="n" :cur="page" @pagination="paginationHandler" />
   </div>
@@ -17,7 +16,7 @@
 <script>
 // @ is an alias to /src
 import ExpensesList from '@/components/ExpensesList.vue'
-import ExpenseForm from '@/components/ExpenseForm.vue'
+// import ExpenseForm from '@/components/ExpenseForm.vue'
 import Pagination from '@/components/Pagination.vue'
 import { mapGetters } from 'vuex'
 
@@ -25,7 +24,7 @@ export default {
   name: 'PageDashboard',
   components: {
     ExpensesList,
-    ExpenseForm,
+    // ExpenseForm,
     Pagination
   },
   data() {
@@ -34,7 +33,6 @@ export default {
       buttonTitle: 'Add expense +',
       page: 1,
       n: 10,
-      showModal: false
     }
   },
   methods: {
@@ -42,23 +40,8 @@ export default {
       this.showExpenseForm = !this.showExpenseForm
       this.buttonTitle = this.buttonTitle==='hide expense form' ? 'Add expense +' : 'hide expense form'
     },
-
-    // onModalShow() {
-    //     this.$modal.show({ name: 'paymentform', settings: {} } )
-    // },
-
-    // onModalClose() {
-    //   this.$modal.close()
-    // },
-
-    clickHander() {
-      this.showModal = !this.showModal
-
-      if (this.showModal) {
-        this.$modal.show({ name: 'ExpenseForm', settings: {} } ) 
-      } else {
-        this.$modal.close() 
-      } 
+    modalClickHander() {
+      this.$modal.show({ name: 'ExpenseForm', settings: {} } )  
     },
 
     paginationHandler(i) {

@@ -27,16 +27,11 @@ export default {
             this.show = false
         },
         edit(obj) {
-            this.onClose()
+            this.onClose() //close the modal
+            console.log('an obj passed to an edit func: ', obj)
             this.$modal.show(
                 { 
-                name: 'ExpenseForm', settings: 
-                    {
-                        id: obj.id, 
-                        value: obj.value, 
-                        date: obj.date, 
-                        category: obj.category
-                    } 
+                    name: 'ExpenseForm', settings: obj
                 } )
             
         },
@@ -55,11 +50,15 @@ export default {
     mounted() {
         this.$context.eventBus.$on('show', this.onShow )
         this.$context.eventBus.$on('close', this.onClose )
+    },
+    beforeDestroy() {
+        this.$context.eventBus.$off('show', this.onShow )
+        this.$context.eventBus.$off('close', this.onClose )
     }
 }
 </script>
 
-<style module lang="scss">
+<style module>
     .wrapper {
         border: 1px solid grey;
         background: lightgrey;

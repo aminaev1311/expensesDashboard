@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     onContextClick(expense) {
-      console.log('context clicked', expense.id)
+      console.log('context clicked', expense)
       this.$context.show(expense)
     }
   },

@@ -2,14 +2,16 @@
   <div>
       <input type="date" v-model="date" placeholder="date">
       <br>
+      <!-- <input v-model="category"> -->
       <select v-model="category">
+        <!-- <option disabled value="">Please select category</option> -->
         <option v-for="(option,idx) in getCategories" :key="idx" :value="option">{{option}}</option>
       </select>
       <CategoryForm />
       <br>
       <input type="number" v-model.number="value" placeholder="amount">
       <br>
-      <button @click="save">Save</button>
+      <button @click="save(settings)">Save</button>
   </div>
 </template>
 
@@ -20,6 +22,12 @@ import CategoryForm from './CategoryForm.vue'
 export default {
     components: { CategoryForm },
     name: 'ExpenseForm',
+    props: {
+        settings: {
+            type: Object,
+            default: null
+        }
+    },
     data() {
         return {
             date: null,
@@ -36,13 +44,22 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'addExpense'
+            'addExpense', 'editExpense'
         ]),
-        save() {
-            this.addExpense({date: this.date, category: this.category, value: this.value});
-            this.date = null
-            this.category = null,
-            this.value = null
+        save(settings) {
+            if (settings.value) {
+                console.log("Saving: ", settings )
+                this.editExpense({date: this.date, category: this.category, value: this.value, id: settings.id})
+            } else {
+                if (this.date && this.category && this.value) {
+                    this.addExpense({date: this.date, category: this.category, value: this.value});
+                }
+            }
+            if (this.date && this.category && this.value) {
+                this.date = null,
+                this.category = null,
+                this.value = null
+            }
         },
         getFormattedDate() {
             const todayTime = new Date();
@@ -56,18 +73,27 @@ export default {
             this.category = category
             this.value = value
             this.date = date
-        }
+        },
+        // onShow() {
+        //     const {value, category, date} = this.settings
+        //     this.category = category
+        //     this.value = value
+        //     this.date = date
+        // }
     },
     mounted() {
         this.date = this.getFormattedDate()
         this.category =  this.$route.params.category || null
         this.value = +this.$route.query.value || null
 
-        if (this.category && this.value) {
-            this.addExpense({date: this.date, category: this.category, value: this.value}); //this saves the expense to the store
-        }
+        console.log("seetings received as props in the ExpenseForm", this.settings)
 
-        this.$modal.eventBus.$on('show', this.onShow)
+        if (this.settings) {
+            let {value, category, date} = this.settings
+            this.category = category
+            this.value = value
+            this.date = date
+        }
     }
     
 }

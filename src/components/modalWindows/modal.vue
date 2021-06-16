@@ -1,10 +1,13 @@
 <template>
-    <div :class="[$style.wrapper]" v-if="show" @click.self="onClose">
+    <div :class="[$style.wrapper]" @click.self="$modal.close()" >
+        <!-- v-if="show"  -->
+
         <!-- <div :class="[$style.overlay]"></div> -->
         <div :class="[$style.content]">
-            <header>{{ show }}</header>
-            <component :is="show" />
-            <button @click="onClose">Close</button>
+            <header>{{ name }}</header>
+            <component :is="name" :settings="settings" />
+            <!-- <button @click="onClose">Close</button> -->
+            <button @click="$modal.close()">Close</button>
         </div>
     </div>
 </template>
@@ -17,26 +20,33 @@ export default {
     components: { 
         ExpenseForm 
     },
+    props: ['name', 'settings'],
     data() {
         return {
-            show: '',
-            settings: null
+            // show: '',
+            // settings: null
         }
     },
     methods: {
-        onShow( { name, settings } ) {
-            this.show = name,
-            this.settings = settings
-        },
-        onClose() {
-            this.show = ''
-        }
+        // onShow( { name, settings } ) {
+        //     this.show = name
+        //     console.log('settings received in the modal: ',settings)
+        //     this.settings = settings
+        // },
+        // onClose() {
+        //     this.show = ''
+        //     this.settings = null
+        // }
     },
     computed: {
     },
     mounted() {
-        this.$modal.eventBus.$on('show', this.onShow)
-        this.$modal.eventBus.$on('close', this.onClose )
+        // this.$modal.eventBus.$on('show', this.onShow)
+        // this.$modal.eventBus.$on('close', this.onClose )
+    },
+    beforeDestroy() {
+        // this.$modal.eventBus.$off('show', this.onShow)
+        // this.$modal.eventBus.$off('close', this.onClose )
     }
 }
 </script>
