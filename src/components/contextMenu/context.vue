@@ -61,10 +61,12 @@ export default {
 <style module>
     .wrapper {
         border: 1px solid grey;
+        z-index: 1000;
         background: lightgrey;
         position: absolute;
         top: 10px;
         left: 230px;
+        padding: 10px
     }
     .edit {
         padding: 10px;

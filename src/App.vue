@@ -1,5 +1,12 @@
 <template>
-  <div id="app">
+  <!-- <div id="app"> -->
+  <v-app id="app">
+    <v-app-bar flat app>
+        <v-btn to="/dashboard" :ripple="false" plain>Dashboard</v-btn>
+        <v-btn to="/about" :ripple="false" plain>About</v-btn>
+        <v-btn to="/404" :ripple="false" plain>404</v-btn>
+    </v-app-bar>
+
     <transition name="fade">
       <Modal v-if="show" :name="show" :settings="settings"/>
     </transition>
@@ -7,15 +14,18 @@
     <transition name="fade" appear>
       <Context />
     </transition>
-    <header>
-      <router-link to="/dashboard">Dashboard</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/404">404</router-link>
-    </header>
-    <main>
+
+    <v-main>
+      <v-container fluid>
+        <router-view/>
+      </v-container>
+    </v-main> 
+
+    <!-- <main>
       <router-view />
-    </main>
-  </div>
+    </main> -->
+  <!-- </div> -->
+  </v-app>
 </template>
 
 <script>

@@ -53,7 +53,7 @@ export default {
 
 <style module>
     .wrapper {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         position: fixed;
         z-index: 500;
         background: rgba(50, 50, 50, 0.918);
@@ -72,6 +72,16 @@ export default {
         bottom: 0;
         right: 0;
         left: 0;
+    }
+    .content {
+        border: 1px solid red;
+        width: 400px;
+        background: white;
+        z-index: 10000
+    }
+
+    .content input,select {
+        border: 1px solid grey;
     }
 
     /* .wrapper {

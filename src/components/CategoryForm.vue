@@ -1,13 +1,18 @@
 <template>
     <span>
-        <button @click="showCategoryForm">
+        <v-btn @click="showCategoryForm">
             Add category
-        </button>
+        </v-btn>
         <span v-if="showNewCategoryForm">
-            <input type="text" v-model="newCategory"/>
-                <button @click="clickHandlerAddCategory">
-                    Save category
-                </button>
+            <!-- <input type="text" v-model="newCategory"/> -->
+            <v-text-field
+            v-model="newCategory"
+            label="Add new category"
+            required
+            ></v-text-field>
+            <v-btn @click="clickHandlerAddCategory">
+                Save category
+            </v-btn>
         </span>
     </span>
 </template>
