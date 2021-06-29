@@ -1,23 +1,11 @@
 <template>
-  <div class="expensesList">
-    <table>
-      <tr>
-        <th>#</th>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Category</th>
-        <th>Value</th>
-      </tr>
-      <tr class="expense" v-for="(expense, idx) in slicedList"  :key="idx">
-          <td> {{ n * (cur-1) + idx + 1}} </td>
-          <td> {{ expense.id }} </td>
-          <td> {{ expense.date }} </td>
-          <td> {{ expense.category }} </td>
-          <td> {{ expense.value }} </td>
-          <td style="font-size:30px;" @click="onContextClick(expense)">&nbsp;...&nbsp;</td>
-      </tr>
-    </table>
-  </div>
+    <v-data-table 
+    :headers="headers"
+    :items-per-page="10"
+    class="elevation-2"
+    :items="getExpenses"
+    >
+    </v-data-table>
 </template>
 
 <script>
@@ -29,6 +17,37 @@ export default {
   name: 'ExpensesList',
   data() {
     return {
+      headers: [
+          { 
+            text: 'ID', 
+            value: 'id' 
+          },
+          { 
+            text: 'Date', 
+            value: 'date' 
+          },
+          { 
+            text: 'Category', 
+            value: 'category' 
+          },
+          { 
+            text: 'Value', 
+            value: 'value' 
+          },
+          { 
+            text: '', 
+            value: '' 
+          },
+        ],
+      data: [
+        {
+          num: 1,
+          id: 1,  
+          date: "2005-03-12", 
+          category: 'food', 
+          value: 250,
+        }
+      ]
     }
   },
   methods: {
