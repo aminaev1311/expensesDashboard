@@ -32,6 +32,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "jest": "^27.0.4",
+    "jscharting-vue": "*",
     "sass": "~1.32",
     "sass-loader": "^10.0.5",
     "vue-chartjs": "^3.5.1",

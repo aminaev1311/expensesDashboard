@@ -4,7 +4,7 @@
       <header>
           <div class="text-h6 text-md-h5 mb-6">My expenses</div>
       </header>
-      <v-btn
+      <!-- <v-btn
         class="mb-4"
         @click="modalClickHander"
         dark
@@ -13,7 +13,7 @@
         <v-icon dark>
           mdi-plus
         </v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-dialog
         v-model="showExpenseForm"
         persistent
@@ -21,15 +21,19 @@
       >
         <template v-slot:activator=" { on } ">
           <v-btn
+            class="mb-4"
             color="success"
             dark
             v-on="on"
             @click="showExpenseForm = true"
           >
             Open Dialog
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
         </template>
-        <v-card>
+        <v-card  class="pa-6">
           <!-- <ExpenseForm v-show="showExpenseForm"/> -->
           <!-- <input type="date" v-model="date" placeholder="date"> -->
           <!-- <v-row justify="center">
@@ -84,7 +88,7 @@
             <v-btn @click="save" class="mr-4 mb-4" color="primary">Save</v-btn>
             <v-btn @click="showExpenseForm = false" class="mr-4 mb-4" color="blue-grey">Close</v-btn>
           </v-row>
-      </v-card>
+        </v-card>
       </v-dialog>
     <!-- <button @click="onClick" > {{ buttonTitle }} </button> -->
     <!-- <ExpenseForm v-show="showExpenseForm"/> -->
@@ -93,7 +97,8 @@
       <!-- <Pagination :n="n" :cur="page" @pagination="paginationHandler" /> -->
     </v-col>
     <v-col>
-      Diagram
+      <div class="text-h6 text-md-h5 mb-16">Expenses by categories</div>
+      <Chart />
     </v-col>
   </v-row>
 </template>
@@ -103,6 +108,7 @@
 import { mapMutations, mapGetters } from 'vuex'
 import CategoryForm from '../components/CategoryForm.vue'
 import ExpensesTable from '@/components/ExpensesTable.vue'
+import Chart from '../components/Chart.vue'
 // import ExpenseForm from '@/components/ExpenseForm.vue'
 // import Pagination from '@/components/Pagination.vue'
 
@@ -116,7 +122,8 @@ export default {
     },
   components: {
     ExpensesTable,
-    CategoryForm
+    CategoryForm,
+    Chart,
     // ExpenseForm,
     // Pagination
   },

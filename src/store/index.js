@@ -83,7 +83,15 @@ export default new Vuex.Store({
     },
     getExpenses: state => state.expenses,
     getExpensesSum: state => state.expenses.reduce( (res, cur) => res + cur.value ,0),
-    getCategories: state => state.categories
+    getCategories: state => state.categories,
+    // getSumByCategory: state => {
+    //   let sumByCategory = []
+    //   for (category in state.categories) {
+    //     state.expenses.filter( item => item.category == category)
+      
+    //   }
+    //   return sumByCategory
+    // }
   },
   modules: {
   }
